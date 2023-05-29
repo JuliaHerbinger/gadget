@@ -36,7 +36,7 @@ Steps to reproduce the experiments of Sections 6.1 to 6.3.
 install.packages(c("ranger", "dplyr", "batchtools", "mlr", "ggplot2", "tidyr", "reshape2",
 "ggpubr", "BBmisc", "data.table", "stringi", "stringr", "checkmate", "kernlab", "xtable", "devtools",
 "tidyverse", "Rmalschains", "iml", "dtw","egg","rlist","mgcv","mvtnorm", "vip", "data.table",
-"e1071", "RColorBrewer", "R6", "mlr3", "xgboost", "fastshap", "patchwork", "nnet"))
+"e1071", "RColorBrewer", "R6", "mlr3", "mlr3learners", "xgboost", "fastshap", "patchwork", "nnet"))
 
 ```
 
