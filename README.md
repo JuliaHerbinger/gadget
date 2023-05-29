@@ -41,10 +41,10 @@ install.packages(c("ranger", "dplyr", "batchtools", "mlr", "ggplot2", "tidyr", "
 ```
 
 2.  Create an experimental registry, add experiments and problem and run simulations via
-    script `R/simulations/generate_data_*.R` where `*` stands for `corr` (Sec. 6.1), `higher_order` (Sec. 6.2) or `pint` (Sec. 6.3).. Data produced by the scripts is stored in 
+    script `R/simulations/generate_data_*.R` where `*` stands for `cor` (Sec. 6.1), `higher_order` (Sec. 6.2) or `pint` (Sec. 6.3). Data produced by the scripts is stored in 
     the subfolder `data/batchtools/` as a separate registry.
     
-3.  Prepare data for analysis by running the script `R/simulations/reduce_experiments_*.R` where `*` stands for `corr` (Sec. 6.1), `higher_order` (Sec. 6.2) or `pint` (Sec. 6.3).
+3.  Prepare data for analysis by running the script `R/simulations/reduce_experiments_*.R` where `*` stands for `cor` (Sec. 6.1), `higher_order` (Sec. 6.2) or `pint` (Sec. 6.3).
 
 4.  To reproduce figures and tables of Section 6 and respective Appendices, run the scripts in folder `R/analysis/`. Figures produced within the script are stored in `figures`.
 
