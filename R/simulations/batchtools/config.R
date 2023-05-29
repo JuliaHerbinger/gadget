@@ -2,7 +2,7 @@
 
 source("R/simulations/helper_simulation.R")
 source("R/simulations/batchtools/simulation_setting_definition.R")
-source("R/tree_splitting_multiple.R")
+source("R/tree_splitting.R")
 source("R/helper_effects.R")
 source("R/helper_tree_splitting.R")
 source("R/helper_general.R")
