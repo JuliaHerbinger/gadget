@@ -148,7 +148,12 @@ helper_regional_labeler = function(tree){
       split.value = subspace$split.value
       
       if(length(e$region_label) < depth-1) e$region_label[[depth-1]] = character(length(tree[[depth]]))
-      e$region_label[[depth-1]][node] = paste(subspace$split.feature.parent, subspace$child.type, subspace$split.value.parent)
+      if(is.null(subspace)){
+        e$region_label[[depth-1]][node] = ""
+      } else{
+        e$region_label[[depth-1]][node] = paste(subspace$split.feature.parent, subspace$child.type, subspace$split.value.parent)
+      }
+      
       
     })
   })
@@ -156,24 +161,40 @@ helper_regional_labeler = function(tree){
 
 
 region_labeler = function(tree, effect_region){
+  
   labels_all = helper_regional_labeler(tree)
-  groups = unique(effect_region$id)
+  #groups = unique(effect_region$id)
+  groups = 1:(2^(length(tree)-1))
+  
   
   labels = lapply(groups, function(group){
-    
+    lab = NULL
+    #browser()
     for( depth in max(effect_region$depth):2){
       
       if(depth == max(effect_region$depth)){
-        label = labels_all[[depth-1]][group]
+        if(labels_all[[depth-1]][group] != ""){
+          lab = labels_all[[depth-1]][group]
+        }
         parent_node = ceiling(group/2)
       } 
+      else if(is.null(lab)){
+        if(labels_all[[depth-1]][parent_node] != ""){
+          lab = labels_all[[depth-1]][parent_node]
+        }
+        parent_node = ceiling(parent_node/2)
+      } 
       else {
-        label = c(label, labels_all[[depth-1]][parent_node])
+        if(labels_all[[depth-1]][parent_node] != ""){
+          lab = c(lab, labels_all[[depth-1]][parent_node])
+        }
         parent_node = ceiling(parent_node/2)
       }
       
     }
-    paste0(paste(rev(label), collapse = " & "), ", n = ", length(tree[[max(effect_region$depth)]][[group]]$subset.idx))
+    #browser()
+    #paste0(paste(rev(label), collapse = " & "), ", n = ", length(tree[[max(effect_region$depth)]][[group]]$subset.idx))
+    paste0(paste(rev(lab), collapse = " & "))
   })
   labels
 }
@@ -184,13 +205,13 @@ plot_regional = function(effect, label, type, color_pal, ymin, ymax){
     plots = lapply(names(effect), function(feat_name){
       feat = effect[[feat_name]]
       if(is.numeric(feat$.borders)){
-        ggplot(feat, aes(x = .borders, y = .value, group = group)) + geom_line(aes(col = group), lwd = 1.5) + theme_bw() +
+        ggplot(feat, aes(x = .borders, y = .value, group = factor(group, levels = unique(group)))) + geom_line(aes(col = factor(group, levels = unique(group))), lwd = 1.5) + theme_bw() +
           ylab(expression(hat(f)[j])) + xlab(feat_name) +  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) +ylim(ymin, ymax) + 
           scale_color_manual(labels = unlist(label), values = color_pal[1:length(label)]) 
       }
       else{
         ggplot(feat, aes(x = .borders, y = .value)) + 
-          geom_pointrange(aes(ymin = lower, ymax = upper, group = factor(group), col = factor(group)), lwd = 1.5, size = 0.9, position=position_dodge(0.05)) + 
+          geom_pointrange(aes(ymin = lower, ymax = upper, group = factor(group, levels = unique(group)), col = factor(group, levels = unique(group))), lwd = 1.5, size = 0.9, position=position_dodge(0.05)) + 
           theme_bw() +
           ylab(expression(hat(f)[j]))+ xlab(feat_name) + ylim(ymin, ymax) + 
           scale_color_manual(labels = unlist(label), values = color_pal[1:length(label)]) 
