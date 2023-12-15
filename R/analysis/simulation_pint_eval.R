@@ -15,9 +15,9 @@ source("R/simulations/helper_pint.R")
 #---------------------------------------------------------------------------------------------------------------
 
 # path to folder, with folders for dataset results
-path = "data/batchtools/result_tables_pint/"
+path = "data/batchtools/result_tables_pint2/"
 datasets = list.files(path)
-type = c("spur_pint")
+type = c("spur_nonlin")
 
 
 # Analysis for PINT compared to HStatistics
@@ -111,7 +111,7 @@ names(data_all) = type
 
 
 # average performance
-data_perf = data_spur[[2]] %>% dplyr::group_by(job.id, n) %>% dplyr::summarise(mean = mean(perf))
+data_perf = eval_spur_lin_perf %>% dplyr::group_by(learner) %>% dplyr::summarise(mean = mean(result))
 data_perf %>% group_by(n) %>% dplyr::summarise(mu = mean(mean),sd= sd(mean) )
 
 

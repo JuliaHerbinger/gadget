@@ -13,7 +13,8 @@ get_sim_results = function(data, job, instance, feature, learner, n.split, impr.
   Z = instance$Z
   X = data[, setdiff(colnames(data), "y")]
   features = colnames(X)
-  testdata = create_sim_data(job, n = 100000, type = job$prob.pars$type, cor = job$prob.pars$cor,...)$data
+  testdata = create_sim_data(job, n = 100000, type = job$prob.pars$type, cor = job$prob.pars$cor, 
+                             dep = job$prob.pars$dep, beta = job$prob.pars$beta, noise = job$prob.pars$noise,...)$data
   
   if(learner == "gam"){
     
