@@ -42,7 +42,7 @@ reduce_pint = function(ades, pdes, n.repl, problems = NULL, savedir) {
 }
 
 library(batchtools)
-reg = loadRegistry("data/batchtools/gadget_sim_pint_test")
+reg = loadRegistry("data/batchtools/gadget_sim_pint_eval")
 #pdes = expand.grid(n = c(300), type = rep(c("spur_pint"), each = 1), stringsAsFactors = FALSE)
 pdes = expand.grid(n = c(300, 500), type = c("spur_lin", "spur_nonlin"), dep = c("high", "medium"), beta = c(2, 1), noise = c("yes", "no"), stringsAsFactors = FALSE)
 
