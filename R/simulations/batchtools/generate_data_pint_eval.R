@@ -26,7 +26,7 @@ source("R/simulations/batchtools/simulation_setting_definition.R")
 
 # add problems and setting definitions
 addProblem(name = "gadget_sim_pint", fun = create_sim_data, reg = reg)
-pdes = expand.grid(n = c(300, 500), type = c("spur_lin", "spur_nonlin"), dep = c("high", "medium"), beta = c(2, 1), noise = c("yes", "no"))
+pdes = expand.grid(n = c(300, 500), type = c("spur_lin", "spur_nonlin"), dep = c("high", "medium", "no"), beta = c(2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25), noise = c("yes", "no"))
 pdes = list("gadget_sim_pint" = pdes)
 
 # add aglorithms
@@ -54,7 +54,7 @@ addExperiments(
   repls = 1000L)
 
 
-ids = findExperiments(algo.pars = (learner =="regr.ksvm"), prob.pars = (n == "500"))
+ids = findExperiments(algo.pars = (learner =="regr.ksvm"), prob.pars = (n == "500" & beta %in% c(2, 1.75, 1.5, 1.25, 1, 0.75)))
 
 # --- 3. SUBMIT JOBS
 # Sys.time()

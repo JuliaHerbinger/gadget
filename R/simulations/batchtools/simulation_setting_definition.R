@@ -78,6 +78,7 @@ create_sim_data = function(job, n, type, cor, dep, beta, noise, ...){
     
     if(dep == "high") x3 = x2 + rnorm(n, 0, 0.3)
     else if(dep == "medium")  x3 = 0.37*x2 + (0.63)*runif(n, -1, 1) 
+    else if(dep == "no") x3 = runif(n, -1, 1)
     x4 = runif(n, -1,1)
     X = data.frame(x1,x2,x3,x4)
     formula = x1 + x2 + x3 - beta*x1*x2
@@ -98,6 +99,7 @@ create_sim_data = function(job, n, type, cor, dep, beta, noise, ...){
     
     if(dep == "high") x3 = x2 + rnorm(n, 0, 0.3)
     else if(dep == "medium") x3 = 0.37*x2 + (0.63)*runif(n, -1, 1) 
+    else if(dep == "no") x3 = runif(n, -1, 1)
     x4 = runif(n, -1,1)
     X = data.frame(x1,x2,x3,x4)
     formula = (x1)^2 + (x2)^3 + exp(x3) - beta*x1*x2
