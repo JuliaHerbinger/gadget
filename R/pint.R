@@ -85,7 +85,7 @@ PIMP <- function(imp, rnd, two.sided=F, log.p=F, method = "nonpar", minsize = 10
     res <- c()
     for(i in 1:length(imp)){
       #compute 'upper' p-value
-      pv <-sum(rnd[,i]>=imp[i])/length(rnd[,i])
+      pv <-(sum(rnd[,i]>=imp[i]) + 1)/(length(rnd[,i])+1)
       
       #if two.sided compute also the 'lower' p-value
       if (two.sided==T) {pv <- min(pv, sum(rnd[,i]<=imp[i])/length(rnd[,i]))}

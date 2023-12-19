@@ -49,7 +49,7 @@ ale_deriv = function(object, S, data, target, h = h, predict.fun) {
       #Take the appropriate differencing and averaging for the ALE plot
       Delta <- y.hat.plus-y.hat.neg
       
-      DT = data.table(
+      DT = data.table::data.table(
         "feat.val" = data[,feature],
         "x.left" = X.neg[,feature],
         "x.right" = X.plus[,feature],
@@ -79,7 +79,7 @@ ale_deriv = function(object, S, data, target, h = h, predict.fun) {
     
     
     
-    DT = data.table(
+    DT = data.table::data.table(
       "feat.val" = data[,feature],
       "x.left" = q[interval.index],
       "x.right" = q[interval.index + 1],
@@ -161,7 +161,7 @@ shap_values = function(predictor, S, data, target){
     data_shap[i,paste0("phi_",S)] = shap$results$phi[which(shap$results$feature %in% S)]
   }
   DT = lapply(S, function(feat){
-    df = data.table("feat.val" = X[,feat], "phi" = data_shap[, paste0("phi_",feat)])
+    df = data.table::data.table("feat.val" = X[,feat], "phi" = data_shap[, paste0("phi_",feat)])
   })
   names(DT) = S
   return(DT)
@@ -176,7 +176,7 @@ fast_shap_values = function(model, S, data, target, nsim = 500, pred.fun, seed =
   
   
   DT = lapply(S, function(feat){
-    df = data.table("feat.val" = X[,feat], "phi" = as.numeric(unlist(shap[, feat])))
+    df = data.table::data.table("feat.val" = X[,feat], "phi" = as.numeric(unlist(shap[, feat])))
   })
   names(DT) = S
   return(DT)

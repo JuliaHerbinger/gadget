@@ -14,7 +14,7 @@ get_sim_results = function(data, job, instance, feature, learner, n.split, impr.
   X = data[, setdiff(colnames(data), "y")]
   features = colnames(X)
   testdata = create_sim_data(job, n = 100000, type = job$prob.pars$type, cor = job$prob.pars$cor, 
-                             dep = job$prob.pars$dep, beta = job$prob.pars$beta, noise = job$prob.pars$noise,...)$data
+                             dep = job$prob.pars$dep, beta = job$prob.pars$beta, noise = job$prob.pars$noise,...)$data 
   
   if(learner == "gam"){
     
@@ -75,13 +75,14 @@ get_sim_results = function(data, job, instance, feature, learner, n.split, impr.
   if(pint == TRUE){
     
     method = c("pd", "ale", "shap") # UPDATE
+    #method = "pd"
     null_all = null_int_perm(X = X, y = data$y, model = model_wrapper, S = features, nperm = 100, effect_method = method)
     int_imp = interaction_importance(X = X, y = data$y, model_wrapper, method, features, calc_hstat = FALSE)
     
     int_test = lapply(names(null_all), function(method){
       null_dist = null_all[[method]]
       int_val = int_imp$int_imp[[method]]
-      pint = PIMP(int_val, null_dist, method = NA)
+      pint = PIMP(int_val, null_dist, method = "nonpar")
       return(list("pint" = pint))
     })
     names(int_test) = method

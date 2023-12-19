@@ -14,7 +14,7 @@ lapply(packages, require, character.only = TRUE)
 if (!dir.exists("data/batchtools")) dir.create("data/batchtools", recursive = TRUE)
 
 #unlink("data/batchtools/gadget_sim_pint_eval", recursive = TRUE)
-reg = makeExperimentRegistry(file.dir = "data/batchtools/gadget_sim_pint_eval", packages = packages,
+reg = makeExperimentRegistry(file.dir = "data/batchtools/gadget_sim_pint_eval2", packages = packages,
                              source = c("R/simulations/batchtools/simulation_setting_definition.R","R/helper_interaction_test.R","R/pint.R", "R/simulations/batchtools/config_pint_eval.R"), seed = 123)
 
 
@@ -26,7 +26,8 @@ source("R/simulations/batchtools/simulation_setting_definition.R")
 
 # add problems and setting definitions
 addProblem(name = "gadget_sim_pint", fun = create_sim_data, reg = reg)
-pdes = expand.grid(n = c(300, 500), type = c("spur_lin", "spur_nonlin"), dep = c("high", "medium", "no"), beta = c(2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25), noise = c("yes", "no"))
+#pdes = expand.grid(n = c(300, 500), type = c("spur_lin", "spur_nonlin"), dep = c("high", "medium", "no"), beta = c(2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25), noise = c("yes", "no"))
+pdes = expand.grid(n = c(300, 500), type = c("spur_int"), dep = c("high", "medium", "no"), beta = c(2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25,0), noise = c("yes", "no"))
 pdes = list("gadget_sim_pint" = pdes)
 
 # add aglorithms
@@ -54,7 +55,9 @@ addExperiments(
   repls = 1000L)
 
 
-ids = findExperiments(algo.pars = (learner =="regr.ksvm"), prob.pars = (n == "500" & beta %in% c(2, 1.75, 1.5, 1.25, 1, 0.75)))
+#ids = findExperiments(algo.pars = (learner =="regr.ksvm"), prob.pars = (n == "500" & beta %in% c(2, 1.75, 1.5, 1.25, 1, 0.75)))
+ids = findExperiments(algo.pars = (learner =="regr.ksvm"), prob.pars = (type == "spur_int" & n == "500" & noise == "yes"))
+
 
 # --- 3. SUBMIT JOBS
 # Sys.time()

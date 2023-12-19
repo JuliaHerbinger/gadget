@@ -15,7 +15,7 @@ helper_interaction_importance = function(method, model, data, S, predict.functio
     }
     
     pred = iml::Predictor$new(model, data = data)
-    effects = iml::FeatureEffects$new(pred, features = S, method = "ice")
+    effects = iml::FeatureEffects$new(pred, features = S, method = "ice", grid.size = 10)
     eff_var = lapply(effects$results, function(feat){
       
       if(!is.null(feat$.class)){
@@ -57,7 +57,8 @@ helper_interaction_importance = function(method, model, data, S, predict.functio
 
 null_interaction = function(X, y, model_wrapper, S, effect_method, class){
     y_perm = y[sample(1:length(y), length(y))]
-    data_perm = cbind(X, "y" = y_perm)
+ # y_perm = sample(y)  
+  data_perm = cbind(X, "y" = y_perm)
     model = model_wrapper(data_perm, target = "y")
     model_fit = model$model_fit
     predict.function = model$predict.function
@@ -100,7 +101,7 @@ null_int_perm_par = function(X, y, model, S, nperm, effect_method, class = NULL)
       }
       
       pred = iml::Predictor$new(model, data = data)
-      effects = iml::FeatureEffects$new(pred, features = S, method = "ice")
+      effects = iml::FeatureEffects$new(pred, features = S, method = "ice", grid.size = 10)
       eff_var = lapply(effects$results, function(feat){
         
         if(!is.null(feat$.class)){
