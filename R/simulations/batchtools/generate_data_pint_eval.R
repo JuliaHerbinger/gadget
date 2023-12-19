@@ -27,7 +27,7 @@ source("R/simulations/batchtools/simulation_setting_definition.R")
 # add problems and setting definitions
 addProblem(name = "gadget_sim_pint", fun = create_sim_data, reg = reg)
 #pdes = expand.grid(n = c(300, 500), type = c("spur_lin", "spur_nonlin"), dep = c("high", "medium", "no"), beta = c(2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25), noise = c("yes", "no"))
-pdes = expand.grid(n = c(300, 500), type = c("spur_int"), dep = c("high", "medium", "no"), beta = c(2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25,0), noise = c("yes", "no"))
+pdes = expand.grid(n = c(300, 500), type = c("spur_int"), dep = c("high", "medium", "no"), beta = c(3, 2.75, 2.5, 2.25, 2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25,0), noise = c("yes", "no"))
 pdes = list("gadget_sim_pint" = pdes)
 
 # add aglorithms
