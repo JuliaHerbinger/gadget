@@ -114,6 +114,27 @@ create_sim_data = function(job, n, type, cor, dep, beta, noise, ...){
     S = Z = features = colnames(X)
   }
   
+  if(type == "spur_int_non"){
+    x1 = runif(n, -1,1)
+    x2 = runif(n, -1,1)
+    
+    if(dep == "high") x3 = exp(x2) + rnorm(n, 0, 0.1)
+    else if(dep == "medium") x3 = 0.37*x2 + (0.63)*runif(n, -1, 1) 
+    else if(dep == "no") x3 = runif(n, -1, 1)
+    x4 = runif(n, -1,1)
+    X = data.frame(x1,x2,x3,x4)
+    formula = beta*x1*exp(x2)
+    
+    if(noise == "no") y = formula
+    else if(noise == "yes") {
+      eps = rnorm(n, 0, 1)
+      y = formula + eps
+    } 
+    data = data.frame(mget(paste0("x",1:4)), y)
+    X = data[,setdiff(names(data),"y")]
+    S = Z = features = colnames(X)
+  }
+  
   if(type == "spur_int"){
     x1 = runif(n, -1,1)
     x2 = runif(n, -1,1)

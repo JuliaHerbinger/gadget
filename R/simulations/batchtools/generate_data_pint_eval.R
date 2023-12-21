@@ -27,13 +27,14 @@ source("R/simulations/batchtools/simulation_setting_definition.R")
 # add problems and setting definitions
 addProblem(name = "gadget_sim_pint", fun = create_sim_data, reg = reg)
 #pdes = expand.grid(n = c(300, 500), type = c("spur_lin", "spur_nonlin"), dep = c("high", "medium", "no"), beta = c(2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25), noise = c("yes", "no"))
-pdes = expand.grid(n = c(300, 500), type = c("spur_int"), dep = c("high", "medium", "no"), beta = c(3, 2.75, 2.5, 2.25, 2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25,0), noise = c("yes", "no"))
+#pdes = expand.grid(n = c(300, 500), type = c("spur_int"), dep = c("high", "medium", "no"), beta = c(3, 2.75, 2.5, 2.25, 2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25,0), noise = c("yes", "no"))
+pdes = expand.grid(n = c(500), type = c("spur_int_non"), dep = c("high"), beta = c(3, 2.75, 2.5, 2.25, 2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25,0), noise = c("yes"))
 pdes = list("gadget_sim_pint" = pdes)
 
 # add aglorithms
 
 # define configurations
-ades = expand.grid(obj.function = list(list("SS_L2_pd","SS_L2_ale", "SS_L2_shap_rc")), learner = c("regr.ksvm", "regr.ranger"), pint = TRUE, stringsAsFactors = FALSE)
+ades = expand.grid(obj.function = list(list("SS_L2_pd","SS_L2_ale", "SS_L2_shap_rc")), learner = c("regr.ksvm"), pint = TRUE, stringsAsFactors = FALSE)
 
 ALGORITHMS = list(
   get_sim_results = list(fun = get_sim_results, ades = ades
@@ -56,7 +57,7 @@ addExperiments(
 
 
 #ids = findExperiments(algo.pars = (learner =="regr.ksvm"), prob.pars = (n == "500" & beta %in% c(2, 1.75, 1.5, 1.25, 1, 0.75)))
-ids = findExperiments(algo.pars = (learner =="regr.ksvm"), prob.pars = (type == "spur_int" & n == "500" & noise == "yes"))
+#ids = findExperiments(algo.pars = (learner =="regr.ksvm"), prob.pars = (type == "spur_int" & n == "500" & noise == "yes"))
 
 
 # --- 3. SUBMIT JOBS
