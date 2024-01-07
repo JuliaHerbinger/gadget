@@ -43,14 +43,17 @@ reduce_pint = function(ades, pdes, n.repl, problems = NULL, savedir) {
 
 library(batchtools)
 reg = loadRegistry("data/batchtools/gadget_sim_pint_eval2", writeable = TRUE)
-#pdes = expand.grid(n = c(300), type = rep(c("spur_pint"), each = 1), stringsAsFactors = FALSE)
-#pdes = expand.grid(n = c(300, 500), type = c("spur_lin", "spur_nonlin"), dep = c("high", "medium", "no"), beta = c(2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25), noise = c("yes", "no"), stringsAsFactors = FALSE)
-#pdes = expand.grid(n = c(300, 500), type = c("spur_int"), dep = c("high", "medium", "no"), beta = c(3, 2.75, 2.5, 2.25, 2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25,0), noise = c("yes", "no"))
+
+# Appendix F
+#pdes = expand.grid(n = c(500), type = c("spur_lin", "spur_nonlin"), dep = c("high", "medium", "no"), beta = c(2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25), noise = c("yes", "no"), stringsAsFactors = FALSE)
+
+# Section 5
+#pdes = expand.grid(n = c(500), type = c("spur_int"), dep = c("no"), beta = c(3, 2.75, 2.5, 2.25, 2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25,0), noise = c("yes", "no"))
+
+# Section 5 - counterexample
 pdes = expand.grid(n = c(500), type = c("spur_int_non"), dep = c("high"), beta = c(3, 2.75, 2.5, 2.25, 2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25,0), noise = c("yes"))
 
 ades = expand.grid(obj.function = list(list("SS_L2_pd","SS_L2_ale", "SS_L2_shap_rc")), learner = c("regr.ksvm"), stringsAsFactors = FALSE)
-#ades = expand.grid(obj.function = list(list("SS_L2_pd","SS_L2_ale", "SS_L2_shap_rc")), learner = c("regr.ksvm", "regr.ranger"), pint = TRUE, stringsAsFactors = FALSE)
-#ades = expand.grid(obj.function = list(list("SS_L2_pd","SS_L2_ale", "SS_L2_shap_rc")), learner = c("regr.ksvm", "regr.ranger"), pint = TRUE, stringsAsFactors = FALSE)
 
 reduce_pint(ades = ades, pdes = pdes,n.repl = 1000, savedir = "data/batchtools/")
 
