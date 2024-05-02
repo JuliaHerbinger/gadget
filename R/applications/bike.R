@@ -4,12 +4,12 @@
 
 # source required functions 
 source("R/load_packages.R")
-source("R/tree_splitting_multiple.R")
+source("R/tree_splitting.R")
 source("R/helper_effects.R")
 source("R/applications/helper.R")
 source("R/helper_tree_splitting.R")
-source("R/interaction_test_all.R")
-source("R/pimp.R")
+source("R/helper_interaction_test.R")
+source("R/pint.R")
 
 #---------------------------------------------------------------------------------------------------
 # 1. load dataset from ISLR2 and convert features
@@ -214,16 +214,16 @@ ice$group = ice$.id %in% which(data$workingday=="1")
 
 # create global and regional effect plots
 glo_pd_bike = ggplot() +
-  geom_line(data = ice, aes_string(x = ".borders", y = ".value", group = ".id"), alpha = 0.4) +
+  geom_line(data = ice, aes_string(x = ".borders", y = ".value", group = ".id"), alpha = 0.25) +
   geom_line(data = glo_pd, aes_string(x = ".borders", y = ".value"), col = "lightgrey", lwd = 2) + 
-  theme_bw() + ylab(expression(hat(f)[hr])) + xlab("hr")
+  theme_bw(base_size = 14) + ylab(expression(hat(f)[hr])) + xlab("hr") + theme(plot.margin=grid::unit(c(0,1,0,1), "points"))
 reg_pd_bike = ggplot() +
-  geom_line(data = ice, aes_string(x = ".borders", y = ".value", group = ".id", color = "group"), alpha = 0.6) +
+  geom_line(data = ice, aes_string(x = ".borders", y = ".value", group = ".id", color = "group"), alpha = 0.5) +
   geom_line(data = reg_pd$hr[reg_pd$hr$group=="21",], aes_string(x = ".borders", y = ".value"), col = brewer.pal(11, "RdBu")[3], lwd = 2) + 
   geom_line(data = reg_pd$hr[reg_pd$hr$group=="22",], aes_string(x = ".borders", y = ".value"), col = brewer.pal(11, "RdBu")[9], lwd = 2) + 
   scale_color_manual(labels = c("No workingday", "Workingday"), values = brewer.pal(11, "RdBu")[c(4,8)], name = "") +
-  theme_bw() + ylab(expression(hat(f)[hr])) + xlab("hr")
+  theme_bw(base_size = 14) + ylab(expression(hat(f)[hr])) + xlab("hr") + theme(plot.margin=grid::unit(c(0,1,0,1), "points"))
 
 
 # save final plots (Figure in Section 1)
-ggsave(glo_pd_bike + reg_pd_bike, filename = "figures/bike_pd.pdf", width = 8, height = 3.5)
+ggsave(glo_pd_bike + reg_pd_bike + plot_layout(axes = "collect"), filename = "figures/bike_pd.pdf", width = 9.5, height = 3.5)
