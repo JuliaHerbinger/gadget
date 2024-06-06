@@ -5,7 +5,7 @@ source("R/simulations/helper_pint.R")
 
 #---------------------------------------------------------------------------------------------------------------
 
-# SIMULATION PINT EVALUATION (SECTION 5 AND APPENDIX F)
+# SIMULATION PINT EVALUATION (SECTION 7 AND APPENDIX E)
 
 #---------------------------------------------------------------------------------------------------------------
 
@@ -51,7 +51,7 @@ data_pint = function(type, path, cor){
 }
 
 #----------------------------------------------------------------------------------------------------
-# CREATE FIGURES FOR SECTION 5
+# CREATE FIGURES FOR SECTION 7
 
 type = "spur_int"
 
@@ -90,7 +90,7 @@ ggsave("figures/pint_eval_pval.pdf", p_pint_pval, width = 10, height = 3.5)
 
 
 
-# CREATE FIGURES FOR SECTION 5 COUNTEREXAMPLE
+# CREATE FIGURES FOR COUNTEREXAMPLE (APPENDIX E)
 
 type = "spur_int_non"
 
@@ -117,7 +117,7 @@ ggsave("figures/pint_eval_counterexample.pdf", p_pint_lin, width = 8, height = 3
 
 
 #----------------------------------------------------------------------------------------------------
-# CREATE FIGURES FOR APPENDIX F
+# CREATE FIGURES FOR APPENDIX E
 
 type = c("spur_lin", "spur_nonlin")
 #type = "spur_int"

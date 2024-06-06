@@ -1,5 +1,5 @@
 ####################################################################################################
-# APPENDIX EXAMPLE FOR PINT/SPURIOUS INTERACTION (APPENDIX D)
+# EXAMPLE FOR PINT/SPURIOUS INTERACTION 
 ####################################################################################################
 
 source("R/load_packages.R")

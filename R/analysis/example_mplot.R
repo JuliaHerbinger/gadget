@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------------------------------
-# APPENDIX A: POSITIVE LINEAR CORRELATION + NEGATIVE LINEAR RELATIONSHIP (MPLOT FAILS)
+# POSITIVE LINEAR CORRELATION + NEGATIVE LINEAR RELATIONSHIP (MPLOT FAILS)
 #---------------------------------------------------------------------------------------------------
 
 source("R/load_packages.R")

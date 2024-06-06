@@ -4,12 +4,12 @@
 
 # source required functions 
 source("R/load_packages.R")
-source("R/tree_splitting_multiple.R")
+source("R/tree_splitting.R")
 source("R/helper_effects.R")
 source("R/applications/helper.R")
 source("R/helper_tree_splitting.R")
-source("R/interaction_test_all.R")
-source("R/pimp.R")
+source("R/helper_interaction_test.R")
+source("R/pint.R")
 
 #---------------------------------------------------------------------------------------------------
 # 1. load dataset (from ProPublica repo) and process data (as done by ProPublica)

@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------------------------------------------------------------
 #
-# PLOTS FOR EXAMPLES IN SECTION 3 + 4 AND RESPECTIVE APPENDICES
+# PLOTS FOR EXAMPLES IN SECTION 4 AND APPENDIX B
 #
 #------------------------------------------------------------------------------------------------------------------------------------
 
@@ -10,9 +10,10 @@ source("R/helper_tree_splitting.R")
 source("R/tree_splitting.R")
 source("R/helper_plots.R")
 source("R/helper_general.R")
+source("R/helper_effects.R")
 
 #------------------------------------------------------------------------------------------------------------------------------------
-# Simulation example described in Section 3 with independent features
+# Simulation example with independent features
 
 # data generation
 n = 500
@@ -56,7 +57,7 @@ measureRSQ(pred$truth, pred$response)
 predict.function = function(model, newdata) predict(model, newdata = newdata)$data$response
 
 #------------------------------------------------------------------------------------------------------------------------------------
-# Plots for uncorrelated case with ICE (Section 3 - Explaining REPID and Section 4.3 - GADGET-PD)
+# Plots for uncorrelated case with ICE 
 
 
 # Feature effects and Splitting
@@ -125,7 +126,7 @@ ggsave(p_right_1 + plot_right[[2]] + p_right_3, filename = "figures/full_tree_ri
 
 
 #------------------------------------------------------------------------------------------------------------------------------------
-# Plots for uncorrelated case with ALE (Section 4.4 and Appendix C.1)
+# Plots for uncorrelated case with ALE (Section 4 and Appendix B)
 
 
 # ALE splitting
@@ -144,7 +145,7 @@ ale_preds[[feature]]$node = as.factor(ifelse(data$x3<=sp_ale$split.points[[which
 ale_preds[[feature]]$dL[ale_preds[[feature]]$dL == 0] = NA
 
 
-# Explanation figure (Section 4.4)
+# Explanation figure 
 ale_preds = ale_preds[[feature]]
 p_expl_ale = ggplot(data = ale_preds) + 
   geom_vline(data = data.frame(interval = c(min(ale_preds$x.left),unique(ale_preds$x.right))), aes(xintercept = interval), lty = 2) + 
@@ -212,7 +213,7 @@ ggsave(p_right_ale, filename = "figures/full_tree_right_ale.pdf", width = 8, hei
 
 
 #------------------------------------------------------------------------------------------------------------------------------------
-# Plots for uncorrelated case with Shapley (Section 4.5 and Appendix C.2)
+# Plots for uncorrelated case with Shapley (Section 4 and Appendix B)
 
 
 # caluclate Shapley values
@@ -243,7 +244,7 @@ p_shap = ggplot() + geom_point(data = data_shap, aes(x = feat.val, y = phi, colo
   theme_bw() + xlab(expression(x[1])) + ylab(expression(phi[1])) + theme(legend.position = "top") 
   
 
-# Plots for Appendix C.1 - plots for tree structure
+# Plots for Appendix B - plots for tree structure
 #load("data/rdata_examples/shap_values_tree.RData")
 tree_shap = compute_tree(shap, data, model = model, predict.function = predict.function, objective = "SS_L2_shap", Z = c("x1","x2","x3"), n.split = 1, n.quantiles = NULL, min.split = 2, store.data = TRUE, shap.recalc = TRUE)
 
@@ -282,7 +283,7 @@ ggsave(p_right_shap, filename = "figures/full_tree_right_shap.pdf", width = 8, h
 
 #------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------
-# Simulation example described in Section 3 with dependent features
+# Simulation example with dependent features
 
 # simulation example
 create_xor_corr = function(n, seed){
@@ -314,7 +315,7 @@ measureRSQ(pred$truth, pred$response)
 
 
 #------------------------------------------------------------------------------------------------------------------------------------
-# Plots for correlated case with ICE (Section 3 - Limitations of REPID)
+# Plots for correlated case with ICE 
 
 # Interpretation
 mod <- Predictor$new(model, data = data[which(names(data)!="y")], y = data$y)
@@ -335,12 +336,12 @@ sp_L2_corr # after split
 
 p_pdp_corr = plot_pdp_split(sp_L2_corr, eff, data, 1)
 
-ggsave("figures/example_repid_extrapol.pdf", p_pdp + p_pdp_corr, width = 9, height = 4)
+ggsave("figures/example_repid_extrapol.pdf", p_pdp + p_pdp_corr + plot_annotation("GADGET-PD", theme=theme(plot.title=element_text(hjust=0.5))), width = 9, height = 4)
 
 
 
 #------------------------------------------------------------------------------------------------------------------------------------
-# Plots for correlated case with ALE (Section 4.4)
+# Plots for correlated case with ALE 
 
 # ALE splitting
 set.seed(123)
@@ -382,11 +383,11 @@ p_ale_corr = plot_ale_split(cbind(ale_preds, data)) +
   theme(legend.position="top")
 
 
-ggsave("figures/example_ale_xor.pdf", (p_expl_ale + p_expl_ale_corr)/(p_ale + p_ale_corr), width = 9, height = 5)
+ggsave("figures/example_ale_xor.pdf", (p_expl_ale + p_expl_ale_corr)/(p_ale + p_ale_corr) + plot_annotation("GADGET-ALE", theme=theme(plot.title=element_text(hjust=0.5))), width = 9, height = 5)
 
 
 #------------------------------------------------------------------------------------------------------------------------------------
-# Plots for uncorrelated case with Shapley (Section 4.5)
+# Plots for uncorrelated case with Shapley 
 
 
 # caluclate Shapley values
@@ -421,7 +422,7 @@ p_shap_cor = ggplot() + geom_point(data = data_shap_cor, aes(x = feat.val, y = p
   theme(legend.position = "top") 
 
 
-ggsave("figures/example_shap_xor.pdf", p_shap + p_shap_cor, width = 10.5, height = 4)
+ggsave("figures/example_shap_xor.pdf", p_shap + p_shap_cor + plot_annotation("GADGET-SD", theme=theme(plot.title=element_text(hjust=0.5))), width = 9, height = 4)
 
 
 
